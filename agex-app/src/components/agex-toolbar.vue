@@ -9,7 +9,9 @@
       <section>
         <ul class="flex gap-3">
           <li v-for="(item, index) in items" :key="index">
-            <span>{{ item.label }}</span>
+            <router-link :to="{ name: item.to.name }">{{
+              item.label
+            }}</router-link>
           </li>
         </ul>
       </section>
@@ -22,18 +24,18 @@ const items = [
   {
     name: "name",
     label: "Home",
-    to: "path",
+    to: { name: "home-view", path: "" },
   },
   {
     name: "name",
     label: "Documents",
-    to: "path",
+    to: { name: "documents-view", path: "" },
   },
-  {
-    name: "name",
-    label: "",
-    to: "path",
-  }
+  // {
+  //   name: "name",
+  //   label: "",
+  //   to: { name: "", path: "" },
+  // },
 ];
 </script>
 <style scoped></style>

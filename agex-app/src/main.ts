@@ -2,6 +2,9 @@ import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
 
+// Icons
+import 'boxicons/css/boxicons.css';
+
 // Primevue
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
@@ -11,6 +14,12 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Paginator from "primevue/paginator";
 import Button from "primevue/button"
+import InputText from "primevue/inputtext";
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+
+// Directive
+import Ripple from 'primevue/ripple';
 
 // Routing
 import router from "./router";
@@ -25,6 +34,7 @@ console.log(root);
 
 // Themees
 app.use(PrimeVue, {
+  ripple: true,
   theme: {
     preset: Aura,
   },
@@ -35,6 +45,14 @@ app.component("pv-data-table", DataTable);
 app.component("pv-column", Column);
 app.component("pv-paginator", Paginator);
 app.component("pv-button", Button)
+app.component("pv-input-text", InputText)
+app.component("pv-icon-field", IconField)
+app.component("pv-input-icon", InputIcon)
+
+
+// Ripple
+app.directive('ripple', Ripple);
+
 
 // Use
 app.use(router);

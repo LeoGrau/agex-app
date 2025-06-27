@@ -1,6 +1,19 @@
 <template>
-  <div class="p-3">
+  <div class="p-3 border rounded border-zinc-700 bg-zinc-900 max-w-[1200px] md:min-w-[1000px]">
     <pv-data-table :value="itemsCom">
+      <template #header>
+        <div class="flex justify-between">
+          <div class="flex gap-2">
+            <pv-button icon="bx bx-plus" label="New"></pv-button>
+          </div>
+          <div>
+            <pv-icon-field>
+              <pv-input-icon class="bx bx-search"></pv-input-icon>
+              <pv-input-text placeholder="Search"></pv-input-text>
+            </pv-icon-field>
+          </div>
+        </div>
+      </template>
       <pv-column></pv-column>
       <pv-column
         v-bind="column"
@@ -9,7 +22,9 @@
       ></pv-column>
       <pv-column>
         <template #body>
-          <div class="flex gap-2">wow</div>
+          <div class="flex gap-2">
+           <pv-button rounded icon="bx bx-pencil"></pv-button>
+          </div>
         </template>
       </pv-column>
       <template #footer>
@@ -84,6 +99,11 @@ const columns = [
   { field: "name", header: "Name" },
   { field: "description", header: "Description" },
 ];
+
+defineProps({
+  size: { type: Number, default: 24 },
+  color: { type: String, default: "#000000" },
+});
 
 const rows = ref(5);
 const first = ref(10);

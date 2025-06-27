@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex justify-center">
     <documents-table-viewer></documents-table-viewer>
   </div>
 </template>
