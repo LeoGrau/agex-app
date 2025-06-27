@@ -17,6 +17,10 @@ import Button from "primevue/button"
 import InputText from "primevue/inputtext";
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import DynamicDialog from "primevue/dynamicdialog"
+
+// Service
+import DialogService from "primevue/dialogservice";
 
 // Directive
 import Ripple from 'primevue/ripple';
@@ -48,6 +52,7 @@ app.component("pv-button", Button)
 app.component("pv-input-text", InputText)
 app.component("pv-icon-field", IconField)
 app.component("pv-input-icon", InputIcon)
+app.component("pv-dynamic-dialog", DynamicDialog)
 
 
 // Ripple
@@ -56,5 +61,6 @@ app.directive('ripple', Ripple);
 
 // Use
 app.use(router);
+app.use(DialogService)
 
 app.mount("#app");

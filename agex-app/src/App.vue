@@ -1,7 +1,8 @@
 <template>
   <div>
+    <pv-dynamic-dialog></pv-dynamic-dialog>
     <agex-toolbar></agex-toolbar>
-    <router-view class="translate-y-[70px]"></router-view>
+    <router-view class="translate-y-[70px] p-8"></router-view>
   </div>
 </template>
 <script lang="ts" setup>
