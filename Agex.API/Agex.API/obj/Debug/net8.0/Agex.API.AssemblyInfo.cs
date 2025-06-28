@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Agex.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e43bc2559efa6393256bc7754a6e7543fb5d833c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67f993a298c37dc74fde9dedcc6fc62be27fac35")]
 [assembly: System.Reflection.AssemblyProductAttribute("Agex.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Agex.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

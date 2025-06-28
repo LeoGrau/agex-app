@@ -16,7 +16,21 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared\Persistence\" />
+      <Folder Include="API\Middlewares\Filters\" />
+      <Folder Include="Application\Common\" />
+      <Folder Include="Application\Identity\" />
+      <Folder Include="Application\Documents\Command\" />
+      <Folder Include="Application\Documents\Queries\" />
+      <Folder Include="Application\Documents\Validators\" />
+      <Folder Include="Domain\Audit\" />
+      <Folder Include="Domain\Common\" />
+      <Folder Include="Domain\Documents\Interfaces\Services\" />
+      <Folder Include="Domain\Identity\" />
+      <Folder Include="Domain\Documents\Events\" />
+      <Folder Include="Domain\Documents\ValueObjects\" />
+      <Folder Include="Infrastructure\Identity\" />
+      <Folder Include="Infrastructure\Persistence\Configuration\" />
+      <Folder Include="Infrastructure\ExternalServices\" />
     </ItemGroup>
 
 </Project>
