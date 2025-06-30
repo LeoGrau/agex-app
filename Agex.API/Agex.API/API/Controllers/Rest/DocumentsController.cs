@@ -1,6 +1,8 @@
 using System.Net.Mime;
+using Agex.API.Application.Common.Pagination;
 using Agex.API.Application.Documents.DTOs;
 using Agex.API.Application.Documents.Interfaces;
+using Agex.API.Application.Documents.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -18,4 +20,12 @@ public class DocumentsController(IDocumentService documentService) : ControllerB
     {
         return Ok(await documentService.GetDocumentAsync(id));
     }
+    
+    [SwaggerOperation("Get Pageable Documents")]
+    [HttpGet("page")]
+    public async Task<ActionResult<Pageable<DocumentDto>>> PageDocumentsAsync([FromQuery] PageRequest request)
+    {
+        return Ok(await documentService.PageAsync(request, ""));
+    }
+
 }

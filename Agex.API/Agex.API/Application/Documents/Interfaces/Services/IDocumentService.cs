@@ -1,9 +1,10 @@
+using Agex.API.Application.Common.Pagination;
 using Agex.API.Application.Documents.DTOs;
-using Agex.API.Domain.Documents.Entities;
 
-namespace Agex.API.Application.Documents.Interfaces;
+namespace Agex.API.Application.Documents.Interfaces.Services;
 
 public interface IDocumentService
 {
     Task<DocumentDto?> GetDocumentAsync(Guid id);
+    Task<Pageable<DocumentDto>> PageAsync(PageRequest pageRequest, string searchTerm);
 } 

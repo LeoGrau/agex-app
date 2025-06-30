@@ -14,6 +14,12 @@ public class DocumentSeeding : IEntityTypeConfiguration<Document>
             Description = "Test Document",
             Name = "Test Document",
             Url = "https://www.google.com/"
+        }, new Document
+        {
+            Id = Guid.NewGuid(),
+            Description = "Test Document2",
+            Name = "Test Document2",
+            Url = "https://www.google.com/"
         });
     }
 }

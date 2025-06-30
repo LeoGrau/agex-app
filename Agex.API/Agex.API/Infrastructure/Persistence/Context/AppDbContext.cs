@@ -1,4 +1,5 @@
 using Agex.API.Domain.Documents.Entities;
+using Agex.API.Infrastructure.Common.Extensions;
 using Agex.API.Infrastructure.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,13 @@ public class AppDbContext(DbContextOptions options, IWebHostEnvironment environm
     {
         base.OnModelCreating(modelBuilder);
 
+        // Documents
+        modelBuilder.Entity<Document>().ToTable("Documents");
+        modelBuilder.Entity<Document>().HasKey(d => d.Id);
+        modelBuilder.Entity<Document>().Property(d => d.Id).ValueGeneratedOnAdd();
+
+        modelBuilder.ConvertAllToSnakeCase();
+        
         modelBuilder.ApplyConfiguration(new DocumentSeeding());
         
     }
