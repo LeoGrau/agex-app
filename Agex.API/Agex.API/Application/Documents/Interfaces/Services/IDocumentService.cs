@@ -5,6 +5,6 @@ namespace Agex.API.Application.Documents.Interfaces.Services;
 
 public interface IDocumentService
 {
-    Task<DocumentDto?> GetDocumentAsync(Guid id);
-    Task<Pageable<DocumentDto>> PageAsync(PageRequest pageRequest, string searchTerm);
+    Task<DetailedDocumentDto?> GetDocumentAsync(Guid id);
+    Task<Pageable<DocumentDto>> PageAsync(PageRequest pageRequest);
 } 

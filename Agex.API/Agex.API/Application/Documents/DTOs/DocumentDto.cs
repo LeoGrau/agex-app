@@ -1,6 +1,8 @@
+using Agex.API.Application.Common.DTOs;
+
 namespace Agex.API.Application.Documents.DTOs;
 
-public class DocumentDto
+public class DocumentDto : AuditDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

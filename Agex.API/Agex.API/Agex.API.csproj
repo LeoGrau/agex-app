@@ -21,7 +21,6 @@
       <Folder Include="Application\Documents\Command\" />
       <Folder Include="Application\Documents\Queries\" />
       <Folder Include="Application\Documents\Validators\" />
-      <Folder Include="Domain\Audit\" />
       <Folder Include="Domain\Documents\Interfaces\Services\" />
       <Folder Include="Domain\Identity\" />
       <Folder Include="Domain\Documents\Events\" />

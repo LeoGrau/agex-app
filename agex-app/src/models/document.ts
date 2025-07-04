@@ -5,11 +5,15 @@ export class Document {
   name: string;
   description: string;
   files: File[]
+  createdAt: string
+  updatedAt: string
 
-  constructor(id: number, name: string, description: string, files: File[]) {
+  constructor(id: number, name: string, description: string, createdAt: string, updatedAt: string ,files: File[]) {
     this.id = id;
     this.name = name;
     this.description = description
     this.files = files
+    this.createdAt = createdAt
+    this.updatedAt = updatedAt
   }
 }

@@ -25,7 +25,7 @@ public class DocumentsController(IDocumentService documentService) : ControllerB
     [HttpGet("page")]
     public async Task<ActionResult<Pageable<DocumentDto>>> PageDocumentsAsync([FromQuery] PageRequest request)
     {
-        return Ok(await documentService.PageAsync(request, ""));
+        return Ok(await documentService.PageAsync(request));
     }
 
 }

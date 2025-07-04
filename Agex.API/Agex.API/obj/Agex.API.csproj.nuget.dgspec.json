@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/devmynuts/Documents/Xenocore/Agex/Agex.API/Agex.API/Agex.API.csproj": {}
+    "D:\\Xenocore\\Agex\\Agex.API\\Agex.API\\Agex.API.csproj": {}
   },
   "projects": {
-    "/home/devmynuts/Documents/Xenocore/Agex/Agex.API/Agex.API/Agex.API.csproj": {
+    "D:\\Xenocore\\Agex\\Agex.API\\Agex.API\\Agex.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/devmynuts/Documents/Xenocore/Agex/Agex.API/Agex.API/Agex.API.csproj",
+        "projectUniqueName": "D:\\Xenocore\\Agex\\Agex.API\\Agex.API\\Agex.API.csproj",
         "projectName": "Agex.API",
-        "projectPath": "/home/devmynuts/Documents/Xenocore/Agex/Agex.API/Agex.API/Agex.API.csproj",
-        "packagesPath": "/home/devmynuts/.nuget/packages/",
-        "outputPath": "/home/devmynuts/Documents/Xenocore/Agex/Agex.API/Agex.API/obj/",
+        "projectPath": "D:\\Xenocore\\Agex\\Agex.API\\Agex.API\\Agex.API.csproj",
+        "packagesPath": "C:\\Users\\leona\\.nuget\\packages\\",
+        "outputPath": "D:\\Xenocore\\Agex\\Agex.API\\Agex.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/devmynuts/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\leona\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -82,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.117/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -6,5 +6,5 @@ namespace Agex.API.Domain.Documents.Interfaces.Repository;
 
 public interface IDocumentRepository : IBaseRepository<Document, Guid>
 {
-    Task<Pageable<Document>> PageAsync(PageRequest request, string searchTerm);
+    Task<Pageable<Document>> PageAsync(PageRequest request);
 }
