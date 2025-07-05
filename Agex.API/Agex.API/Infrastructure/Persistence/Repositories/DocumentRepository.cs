@@ -22,8 +22,7 @@ public class DocumentRepository(AppDbContext appDbContext)
     {
         // All query
         var query = DbSet.Where(document =>
-                document.Name.Contains(request.SearchTerm!) || document.Description.Contains(request.SearchTerm!) ||
-                document.Url.Contains(request.SearchTerm!) || document.Id.ToString().Contains(request.SearchTerm!))
+                document.Name.Contains(request.SearchTerm!) || document.Description.Contains(request.SearchTerm!) || document.Id.ToString().Contains(request.SearchTerm!))
             .AsQueryable();
 
         var totalCount = await query.CountAsync();

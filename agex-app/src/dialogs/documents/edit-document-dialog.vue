@@ -13,6 +13,7 @@
                 <pv-button
                   severity="success"
                   label="Create File"
+                  @click="openCreateFileDialog()"
                   icon="bx bx-plus"
                 ></pv-button>
                 <pv-icon-field>
@@ -110,6 +111,7 @@ import type { Pageable } from "../../types/pageable.interface";
 import { file } from "@primeuix/themes/aura/fileupload";
 import { useDialog } from "primevue";
 import EditFileDialog from "../files/edit-file-dialog.vue";
+import CreateFileDialog from "../files/create-file-dialog.vue";
 
 interface EditDocumentDialogProps {
   document: Document;
@@ -229,6 +231,24 @@ function openEditFileDialog(file: File) {
         <div class="flex flex-col gap-2">
           <span>Edit File</span>
           <small>{file.name}</small>
+        </div>
+      ),
+    },
+    props: {
+      modal: true,
+      style: {
+        minWidth: "500px",
+      },
+    },
+  });
+}
+
+function openCreateFileDialog() {
+  dialog.open(CreateFileDialog, {
+    templates: {
+      header: (
+        <div class="flex flex-col gap-2">
+          <span>Create File</span>
         </div>
       ),
     },

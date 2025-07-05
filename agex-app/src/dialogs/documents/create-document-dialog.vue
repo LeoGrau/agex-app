@@ -1,11 +1,61 @@
 <template>
   <div>
-    
+    <pv-form :initialValues="initialValues">
+      <div class="flex flex-col gap-7 pt-6">
+        <pv-float-label v-for="(field, index) in fieldInputs" :key="index">
+          <component
+            v-model="initialValues[field.key]"
+            :name="field.key"
+            :is="field.componentName"
+            fluid
+            :invalid="field.invalid(initialValues[field.key])"
+          ></component>
+          <label for="">{{ field.label }}</label>
+        </pv-float-label>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <pv-button label="Ok" severity="success" icon="bx bx-save" @click="onOkButton"></pv-button>
+        <pv-button label="Cancel" severity="danger" icon="bx bx-x" @click="onCancelButton"></pv-button>
+      </div>
+    </pv-form>
   </div>
 </template>
 <script setup lang="tsx">
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+import { inject, reactive, ref, type Ref } from "vue";
+
+const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
+
+const initialValues = reactive({
+  name: "",
+  description: "",
+} as any);
+
+const fieldInputs = ref([
+  {
+    label: "Name",
+    key: "name",
+    value: "",
+    componentName: "pv-input-text",
+    invalid: (value: any) => !value,
+  },
+  {
+    label: "Description",
+    key: "description",
+    value: "",
+    componentName: "pv-text-area",
+    invalid: (value: any) => !value,
+  },
+]);
+
+function onOkButton() {
+  dialogRef?.value.close()
+}
+
+function onCancelButton() {
+  dialogRef?.value.close();
+}
+
 
 </script>
-<style lang="">
-  
-</style>
+<style scoped></style>

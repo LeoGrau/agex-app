@@ -6,7 +6,11 @@
       <template #header>
         <div class="flex justify-between">
           <div class="flex gap-2">
-            <pv-button icon="bx bx-plus" label="Create"></pv-button>
+            <pv-button
+              icon="bx bx-plus"
+              label="Create"
+              @click="openCreateDocumentDialog()"
+            ></pv-button>
           </div>
           <div>
             <pv-icon-field>
@@ -64,6 +68,7 @@ import type { Document } from "../../models/document";
 import type { File } from "../../models/file";
 import type { Pageable } from "../../types/pageable.interface";
 import documentService from "../../services/document.service";
+import CreateDocumentDialog from "../../dialogs/documents/create-document-dialog.vue";
 
 const documentPage: Ref<Pageable<Document> | null> = ref(null);
 
@@ -84,7 +89,7 @@ const columns = [
       </span>
     ),
   },
-   {
+  {
     header: "Updated Date",
     field: "updatedAt",
     template: (document: Document) => (
@@ -127,11 +132,30 @@ function openEditDocument(document: Document) {
     props: {
       modal: true,
       style: {
-        minWidth: "800px"
-      }
+        minWidth: "800px",
+      },
     },
     data: {
       document: document,
+    },
+  });
+}
+
+function openCreateDocumentDialog() {
+  dialog.open(CreateDocumentDialog, {
+    props: {
+      modal: true,
+      style: {
+        minWidth: "500px"
+      }
+    },
+    templates: {
+      header: (
+        <div class="flex flex-col">
+          {" "}
+          <span>Create Document</span>
+        </div>
+      ),
     },
   });
 }
