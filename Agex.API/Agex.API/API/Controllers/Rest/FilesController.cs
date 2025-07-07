@@ -1,7 +1,9 @@
 using System.Net.Mime;
 using Agex.API.Application.Common.Pagination;
+using Agex.API.Application.Documents.Command.Create;
 using Agex.API.Application.Documents.DTOs;
 using Agex.API.Application.Documents.Interfaces.Services;
+using Agex.API.Application.Documents.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -32,5 +34,13 @@ public class FilesController(IFileService fileService) : ControllerBase
     public async Task<ActionResult<Pageable<FileDto>>> PageFilesByDocumentIdAsync([FromQuery] PageRequest request, [FromRoute] Guid documentId)
     {
         return Ok(await fileService.PageByDocumentIdAsync(request, documentId));
+    }
+
+    [HttpPost]
+    [SwaggerOperation("Get File", "Get Pageable Files by Document ID")]
+    public async Task<ActionResult<FileResponse>> CreateAsync(CreateFileCommand command)
+    {
+        var result = await fileService.CreateAsync(command);
+        return Ok(new FileResponse(result));
     }
 }

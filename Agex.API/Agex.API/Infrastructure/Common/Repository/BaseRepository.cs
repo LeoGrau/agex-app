@@ -13,7 +13,7 @@ public class BaseRepository<TEntity, TKey>(AppDbContext appDbContext) : IBaseRep
         return await DbSet.FindAsync(id);
     }
 
-    public virtual async Task AddAsync(TEntity entity)
+    public virtual async Task CreateAsync(TEntity entity)
     {
         await DbSet.AddAsync(entity);
     }

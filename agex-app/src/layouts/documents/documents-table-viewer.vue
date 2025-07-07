@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div
     class="p-3 border rounded border-zinc-700 bg-zinc-900 max-w-[1200px] md:min-w-full"
   >

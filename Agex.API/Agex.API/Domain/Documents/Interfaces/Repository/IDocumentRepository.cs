@@ -1,4 +1,5 @@
 using Agex.API.Application.Common.Pagination;
+using Agex.API.Application.Documents.Command.Create;
 using Agex.API.Domain.Documents.Entities;
 using Agex.API.Infrastructure.Common.Repository;
 

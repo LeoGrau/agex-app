@@ -17,8 +17,8 @@
 
     <ItemGroup>
       <Folder Include="API\Middlewares\Filters\" />
+      <Folder Include="Application\Documents\Command\Update\" />
       <Folder Include="Application\Identity\" />
-      <Folder Include="Application\Documents\Command\" />
       <Folder Include="Application\Documents\Queries\" />
       <Folder Include="Application\Documents\Validators\" />
       <Folder Include="Domain\Documents\Interfaces\Services\" />
