@@ -1,4 +1,9 @@
+using Agex.API.API.Requests.Documents;
+using Agex.API.API.Requests.Documents.Create;
+using Agex.API.API.Requests.Documents.Update;
 using Agex.API.Application.Common.Pagination;
+using Agex.API.Application.Documents.Command.Create;
+using Agex.API.Application.Documents.Command.Update;
 using Agex.API.Application.Documents.DTOs;
 using Agex.API.Domain.Documents.Entities;
 using AutoMapper;
@@ -15,8 +20,12 @@ public class ModelToResourceProfile : Profile
         CreateMap<Pageable<Document>, Pageable<DocumentDto>>();
         CreateMap<Pageable<Document>, Pageable<DetailedDocumentDto>>();
         
-        CreateMap<File, FileDto>();
-        CreateMap<Pageable<File>, Pageable<FileDto>>();
         
+        CreateMap<File, FileDto>();
+        CreateMap<CreateFileRequest, CreateFileCommand>();
+        CreateMap<UpdateFileRequest, UpdateFileCommand>();
+        CreateMap<CreateFileCommand, File>();
+        CreateMap<UpdateFileCommand, File>();
+        CreateMap<Pageable<File>, Pageable<FileDto>>();
     }
 }

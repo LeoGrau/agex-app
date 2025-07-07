@@ -1,5 +1,6 @@
 using Agex.API.Application.Common.Pagination;
 using Agex.API.Application.Documents.Command.Create;
+using Agex.API.Application.Documents.Command.Update;
 using Agex.API.Application.Documents.DTOs;
 using Agex.API.Application.Documents.Interfaces.Services;
 using Agex.API.Domain.Common.Interfaces;
@@ -38,6 +39,27 @@ public class FileService(IFileRepository fileRepository, IUnitOfWork unitOfWork,
             await fileRepository.CreateAsync(file);
             await unitOfWork.CommitTransactionAsync();
             return mapper.Map<FileDto>(file);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<FileDto> UpdateAsync(Guid id, UpdateFileCommand command)
+    {
+        try
+        {
+            var existingFile = await fileRepository.GetAsync(id);
+            if(existingFile == null)
+                throw new KeyNotFoundException($"File with id {id} not found");
+            
+            await unitOfWork.BeginTransactionAsync();
+            existingFile.Update(command);
+            await unitOfWork.CommitTransactionAsync();
+            
+            return mapper.Map<FileDto>(existingFile);
         }
         catch (Exception e)
         {
