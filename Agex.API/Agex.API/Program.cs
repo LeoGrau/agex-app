@@ -59,7 +59,7 @@ builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Automapper
-builder.Services.AddAutoMapper(typeof(ModelToResourceProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

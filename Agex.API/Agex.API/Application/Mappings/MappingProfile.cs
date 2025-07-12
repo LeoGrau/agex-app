@@ -6,17 +6,23 @@ using Agex.API.Application.Documents.Command.Create;
 using Agex.API.Application.Documents.Command.Update;
 using Agex.API.Application.Documents.DTOs;
 using Agex.API.Domain.Documents.Entities;
+using Agex.API.Domain.Documents.Operations.Create;
+using Agex.API.Domain.Documents.Operations.Update;
 using AutoMapper;
 using File = Agex.API.Domain.Documents.Entities.File;
 
 namespace Agex.API.Application.Mappings;
 
-public class ModelToResourceProfile : Profile
+public class MappingProfile : Profile
 {
-    public ModelToResourceProfile()
+    public MappingProfile()
     {
         CreateMap<Document, DocumentDto>();
         CreateMap<Document, DetailedDocumentDto>();
+        CreateMap<CreateDocumentRequest, CreateDocumentCommand>();
+        CreateMap<UpdateDocumentRequest, UpdateDocumentCommand>();
+        CreateMap<CreateDocumentCommand, CreateDocumentData>();
+        CreateMap<UpdateDocumentCommand, UpdateDocumentData>();
         CreateMap<Pageable<Document>, Pageable<DocumentDto>>();
         CreateMap<Pageable<Document>, Pageable<DetailedDocumentDto>>();
         
@@ -24,8 +30,8 @@ public class ModelToResourceProfile : Profile
         CreateMap<File, FileDto>();
         CreateMap<CreateFileRequest, CreateFileCommand>();
         CreateMap<UpdateFileRequest, UpdateFileCommand>();
-        CreateMap<CreateFileCommand, File>();
-        CreateMap<UpdateFileCommand, File>();
+        CreateMap<CreateFileCommand, CreateFileData>();
+        CreateMap<UpdateFileCommand, UpdateFileData>();
         CreateMap<Pageable<File>, Pageable<FileDto>>();
     }
 }
