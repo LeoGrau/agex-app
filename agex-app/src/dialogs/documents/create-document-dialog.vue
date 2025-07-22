@@ -23,6 +23,7 @@
 <script setup lang="tsx">
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { inject, reactive, ref, type Ref } from "vue";
+import type { CreateDocument } from "../../types/documents/create-document.interface";
 
 const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
 
@@ -49,7 +50,11 @@ const fieldInputs = ref([
 ]);
 
 function onOkButton() {
-  dialogRef?.value.close()
+  var createDocument : CreateDocument = {
+    name: initialValues.name,
+    description: initialValues.description,
+  }
+  dialogRef?.value.close(createDocument)
 }
 
 function onCancelButton() {

@@ -19,6 +19,7 @@
     </div>
     <div class="flex justify-end gap-2">
       <pv-button
+        @click=""
         severity="success"
         type="submit"
         label="Ok"
@@ -34,7 +35,15 @@
   </pv-form>
 </template>
 <script setup lang="tsx">
-import { reactive, ref } from "vue";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+import { inject, onMounted, reactive, ref, type Ref } from "vue";
+import fileService from "../../services/file.service";
+
+const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
+const params = dialogRef?.value.data
+const fileId = ref(params.fileId)
+
+const file = ref()
 
 const initialValues = reactive({
   name: "",
@@ -68,6 +77,19 @@ const inputs = ref([
 
 function onFormSubmit(event: any) {
   console.log("event", event);
+  dialogRef?.value.close()
 }
+
+function setFields() {
+  initialValues.name = file.value.name
+  initialValues.url = file.value.url
+  initialValues.description = file.value.description
+}
+
+onMounted(async () => {
+  file.value = (await fileService.getFileById(fileId.value)).data
+  setFields()
+  console.log(file.value)
+})
 </script>
 <style lang=""></style>

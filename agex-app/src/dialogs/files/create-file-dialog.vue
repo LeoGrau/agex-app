@@ -23,8 +23,10 @@
 <script setup lang="tsx">
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { inject, reactive, ref, type Ref } from "vue";
+import type { CreateFile } from "../../types/files/create-file.interface";
 
 const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
+const params = dialogRef?.value.data;
 
 const initialValues = reactive({
   name: "",
@@ -57,7 +59,13 @@ const fieldInputs = ref([
 ]);
 
 function onOkButton() {
-  dialogRef?.value.close()
+  const newFile : CreateFile = {
+    name: initialValues.name,
+    description: initialValues.description,
+    url: initialValues.url,
+    documentId: params.documentId
+  }
+  dialogRef?.value.close(newFile)
 }
 
 function onCancelButton() {

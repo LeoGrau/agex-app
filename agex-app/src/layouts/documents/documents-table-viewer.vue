@@ -1,8 +1,19 @@
-  <template>
+<template>
   <div
     class="p-3 border rounded border-zinc-700 bg-zinc-900 max-w-[1200px] md:min-w-full"
   >
-    <pv-data-table :value="documentPage?.items">
+    <pv-data-table :value="documentPage?.items" :loading="loading">
+      <template #empty>
+        <div class="flex justify-center items-center space-x-1">
+          <span>There are</span> <strong class="text-red-500"> NO </strong>
+          <span>documents</span>
+        </div>
+      </template>
+      <template #loading>
+        <div class="flex justify-center items-center">
+          <fragmented-loader></fragmented-loader>
+        </div>
+      </template>
       <template #header>
         <div class="flex justify-between">
           <div class="flex gap-2">
@@ -17,7 +28,7 @@
               <pv-input-icon class="bx bx-search"></pv-input-icon>
               <pv-input-text
                 v-model="searchTerm"
-                @update:modelValue="updatePageFromSearchInput($event)"
+                @update:modelValue="debouncedUpdatePageFromSearchInput($event)"
                 placeholder="Search"
               ></pv-input-text>
             </pv-icon-field>
@@ -52,7 +63,7 @@
           v-model:pageLinkSize="pageLinkSize"
           :rows="rows"
           :rowsPerPageOptions="[5, 10, 20, 50]"
-          :totalRecords="total"
+          :totalRecords="documentPage?.totalCount"
         ></pv-paginator>
       </template>
     </pv-data-table>
@@ -62,6 +73,8 @@
 import { ref, watch, computed, type Ref, onMounted } from "vue";
 import { useDialog } from "primevue/usedialog";
 
+import { debounce } from "lodash";
+
 // Dialog
 import EditDocumentDialog from "../../dialogs/documents/edit-document-dialog.vue";
 import type { Document } from "../../models/document";
@@ -69,8 +82,13 @@ import type { File } from "../../models/file";
 import type { Pageable } from "../../types/pageable.interface";
 import documentService from "../../services/document.service";
 import CreateDocumentDialog from "../../dialogs/documents/create-document-dialog.vue";
+import type { CreateDocument } from "../../types/documents/create-document.interface";
+
+import FragmentedLoader from "../../components/loaders/fragmented-loader.vue";
 
 const documentPage: Ref<Pageable<Document> | null> = ref(null);
+
+const loading = ref(true);
 
 const columns = [
   { field: "id", header: "ID" },
@@ -146,8 +164,8 @@ function openCreateDocumentDialog() {
     props: {
       modal: true,
       style: {
-        minWidth: "500px"
-      }
+        minWidth: "500px",
+      },
     },
     templates: {
       header: (
@@ -156,6 +174,13 @@ function openCreateDocumentDialog() {
           <span>Create Document</span>
         </div>
       ),
+    },
+    async onClose(options) {
+      if (options && options.data) {
+        const data: CreateDocument = options.data;
+        await documentService.createDocument(data);
+        loading.value = false;
+      }
     },
   });
 }
@@ -166,6 +191,7 @@ async function updatePageFromPaginator(event: {
   rows: number;
   pageCount: number;
 }) {
+  console.log("event1: ", event);
   rows.value = event.rows;
   documentPage.value = (
     await documentService.getDocumentsPerPage(
@@ -174,6 +200,7 @@ async function updatePageFromPaginator(event: {
       searchTerm.value
     )
   ).data;
+  loading.value = false;
 }
 
 async function updatePageFromSearchInput(event: string) {
@@ -182,13 +209,22 @@ async function updatePageFromSearchInput(event: string) {
     await documentService.getDocumentsPerPage(1, rows.value, event)
   ).data;
   total.value = documentPage.value?.totalCount!;
+  loading.value = false;
 }
+
+const debouncedUpdatePageFromSearchInput = debounce((a: string) => {
+  console.log(a);
+  loading.value = false
+  updatePageFromSearchInput(a);
+  loading.value = true
+}, 400);
 
 async function getDocumentsPerPage() {
   documentPage.value = (
     await documentService.getDocumentsPerPage(1, rows.value, searchTerm.value)
   ).data;
   total.value = documentPage.value?.totalCount!;
+  loading.value = false;
   console.log(total.value);
 }
 

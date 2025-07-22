@@ -1,3 +1,4 @@
+import type { CreateFile } from "../types/files/create-file.interface";
 import { httpCommon } from "./server/api";
 
 class FileService {
@@ -21,6 +22,10 @@ class FileService {
     return httpCommon.get(
       `${this.path}/document/${documentId}/page?page_index=${pageIndex}&page_size=${pageSize}&search_term=${searchTerm}`
     );
+  }
+  
+  createFile(file: CreateFile) {
+    return httpCommon.post(`${this.path}`, file)
   }
 }
 
