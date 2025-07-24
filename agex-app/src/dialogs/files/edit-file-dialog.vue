@@ -1,5 +1,7 @@
 <template>
   <pv-form
+    ref="formRef"
+    :resolver
     v-slot="$form"
     :initialValues="initialValues"
     @submit="onFormSubmit($event)"
@@ -9,10 +11,9 @@
       <pv-float-label v-for="(input, index) in inputs" :key="index">
         <component
           :is="input.componentName"
-          fluid
           :name="input.key"
-          v-model="initialValues[input.key]"
-          :invalid="input.invalid(initialValues[input.key])"
+          :invalid="$form[input.key]?.invalid"
+          fluid
         ></component>
         <label>{{ input.label }}</label>
       </pv-float-label>
@@ -40,56 +41,72 @@ import { inject, onMounted, reactive, ref, type Ref } from "vue";
 import fileService from "../../services/file.service";
 
 const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
-const params = dialogRef?.value.data
-const fileId = ref(params.fileId)
+const params = dialogRef?.value.data;
+const fileId = ref(params.fileId);
 
-const file = ref()
+const file = ref();
+const formRef = ref();
+
+const resolver = ({ values }: { values: any }) => {
+  const errors: any = {};
+  console.log(values);
+  if (!values.name) {
+    errors.name = [{ message: "Name is required" }];
+  }
+  if (!values.url) {
+    errors.url = [{ message: "URL is required" }];
+  }
+  if (!values.description) {
+    errors.description = [{ message: "Description is required" }];
+  }
+  return {
+    errors
+  }
+};
 
 const initialValues = reactive({
   name: "",
   url: "",
-  description: ""
+  description: "",
 } as any);
 
 const inputs = ref([
   {
     label: "Name",
     key: "name",
-    value: "",
     componentName: "pv-input-text",
-    invalid: (value: any) => !value,
   },
   {
     label: "URL",
     key: "url",
-    value: "",
     componentName: "pv-input-text",
-    invalid: (value: any) => !value,
   },
   {
     label: "Description",
     key: "description",
-    value: "",
     componentName: "pv-text-area",
-    invalid: (value: any) => !value,
   },
 ]);
 
 function onFormSubmit(event: any) {
   console.log("event", event);
-  dialogRef?.value.close()
+  if (event.valid) {
+    dialogRef?.value.close();
+  }
 }
 
 function setFields() {
-  initialValues.name = file.value.name
-  initialValues.url = file.value.url
-  initialValues.description = file.value.description
+  formRef.value.setValues({
+    name: file.value.name,
+    url: file.value.url,
+    description: file.value.description,
+  });
 }
 
 onMounted(async () => {
-  file.value = (await fileService.getFileById(fileId.value)).data
-  setFields()
-  console.log(file.value)
-})
+  file.value = (await fileService.getFileById(fileId.value)).data;
+  setFields();
+  console.log(file.value);
+});
 </script>
 <style lang=""></style>

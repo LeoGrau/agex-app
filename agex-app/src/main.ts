@@ -26,9 +26,11 @@ import Tab from "primevue/tab"
 import TabList from "primevue/tablist"
 import TabPanel from "primevue/tabpanel"
 import TabPanels from "primevue/tabpanels"
+import ConfirmDialog from "primevue/confirmdialog"
 
 // Service
 import DialogService from "primevue/dialogservice";
+import ConfirmationService from 'primevue/confirmationservice';
 
 // Directive
 import Ripple from 'primevue/ripple';
@@ -73,6 +75,7 @@ app.component("pv-tab-panels", TabPanels)
 app.component("pv-tabs", Tabs)
 app.component("pv-tab", Tab)
 app.component("pv-tab-list", TabList)
+app.component("pv-confirm-dialog", ConfirmDialog)
 
 
 // Ripple
@@ -82,5 +85,6 @@ app.directive('ripple', Ripple);
 // Use
 app.use(router);
 app.use(DialogService)
+app.use(ConfirmationService)
 
 app.mount("#app");

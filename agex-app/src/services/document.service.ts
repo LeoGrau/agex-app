@@ -18,6 +18,9 @@ class DocumentService {
   updateDocument(documentId: string, document: UpdateDocument) {
     return httpCommon.put(`${this.path}/${documentId}`, document);
   }
+  deleteDocument(documentId: string) {
+    return httpCommon.delete(`${this.path}/${documentId}`)
+  }
 }
 
 export default new DocumentService();

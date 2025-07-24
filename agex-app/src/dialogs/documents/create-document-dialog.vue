@@ -1,21 +1,35 @@
 <template>
   <div>
-    <pv-form :initialValues="initialValues">
+    <pv-form
+      @submit="onOkButton"
+      v-slot="$form"
+      :resolver
+      :initialValues="initialValues"
+    >
       <div class="flex flex-col gap-7 pt-6">
         <pv-float-label v-for="(field, index) in fieldInputs" :key="index">
           <component
-            v-model="initialValues[field.key]"
             :name="field.key"
             :is="field.componentName"
+            :invalid="$form[field.key]?.invalid"
             fluid
-            :invalid="field.invalid(initialValues[field.key])"
           ></component>
           <label for="">{{ field.label }}</label>
         </pv-float-label>
       </div>
       <div class="flex justify-end gap-2 mt-4">
-        <pv-button label="Ok" severity="success" icon="bx bx-save" @click="onOkButton"></pv-button>
-        <pv-button label="Cancel" severity="danger" icon="bx bx-x" @click="onCancelButton"></pv-button>
+        <pv-button
+          type="submit"
+          label="Ok"
+          severity="success"
+          icon="bx bx-save"
+        ></pv-button>
+        <pv-button
+          label="Cancel"
+          severity="danger"
+          icon="bx bx-x"
+          @click="onCancelButton"
+        ></pv-button>
       </div>
     </pv-form>
   </div>
@@ -32,35 +46,44 @@ const initialValues = reactive({
   description: "",
 } as any);
 
+const resolver = ({ values }: { values: any }) => {
+  const errors: any = {};
+  console.log(values);
+  if (!values.name) {
+    errors.name = [{ message: "Name is required" }];
+  }
+  if (!values.description) {
+    errors.description = [{ message: "Description is required" }];
+  }
+  return { values, errors };
+};
+
 const fieldInputs = ref([
   {
     label: "Name",
     key: "name",
-    value: "",
     componentName: "pv-input-text",
-    invalid: (value: any) => !value,
   },
   {
     label: "Description",
     key: "description",
-    value: "",
     componentName: "pv-text-area",
-    invalid: (value: any) => !value,
   },
 ]);
 
-function onOkButton() {
-  var createDocument : CreateDocument = {
-    name: initialValues.name,
-    description: initialValues.description,
+function onOkButton(form: any) {
+  console.log(form);
+  if (form.valid) {
+    var createDocument: CreateDocument = {
+      name: form.values.name,
+      description: form.values.description,
+    };
+    dialogRef?.value.close(createDocument);
   }
-  dialogRef?.value.close(createDocument)
 }
 
 function onCancelButton() {
   dialogRef?.value.close();
 }
-
-
 </script>
 <style scoped></style>

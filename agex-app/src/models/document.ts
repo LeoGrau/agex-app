@@ -1,14 +1,14 @@
 import type { File } from "./file";
 
 export class Document {
-  id: number;
+  id: string;
   name: string;
   description: string;
   files: File[]
   createdAt: string
   updatedAt: string
 
-  constructor(id: number, name: string, description: string, createdAt: string, updatedAt: string ,files: File[]) {
+  constructor(id: string, name: string, description: string, createdAt: string, updatedAt: string ,files: File[]) {
     this.id = id;
     this.name = name;
     this.description = description

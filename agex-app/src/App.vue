@@ -1,5 +1,6 @@
 <template>
   <div class="h-full w-full">
+    <pv-confirm-dialog></pv-confirm-dialog>
     <pv-dynamic-dialog></pv-dynamic-dialog>
     <agex-toolbar></agex-toolbar>
     <div class="h-full w-full flex justify-center items-center" v-if="isRouteLoading">

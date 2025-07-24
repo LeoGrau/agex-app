@@ -23,9 +23,12 @@ class FileService {
       `${this.path}/document/${documentId}/page?page_index=${pageIndex}&page_size=${pageSize}&search_term=${searchTerm}`
     );
   }
-  
+
   createFile(file: CreateFile) {
-    return httpCommon.post(`${this.path}`, file)
+    return httpCommon.post(`${this.path}`, file);
+  }
+  deleteFile(fileId: string) {
+    return httpCommon.delete(`${this.path}/${fileId}`);
   }
 }
 

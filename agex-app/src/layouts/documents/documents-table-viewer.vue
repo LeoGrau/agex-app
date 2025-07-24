@@ -53,6 +53,12 @@
               icon="bx bx-pencil"
               @click="openEditDocument(slotProps.data)"
             ></pv-button>
+            <pv-button
+              rounded
+              severity="danger"
+              icon="bx bx-trash"
+              @click="openDeleteConfirmDialog(slotProps.data)"
+            ></pv-button>
           </div>
         </template>
       </pv-column>
@@ -85,10 +91,12 @@ import CreateDocumentDialog from "../../dialogs/documents/create-document-dialog
 import type { CreateDocument } from "../../types/documents/create-document.interface";
 
 import FragmentedLoader from "../../components/loaders/fragmented-loader.vue";
+import { useConfirm } from "primevue";
 
 const documentPage: Ref<Pageable<Document> | null> = ref(null);
 
 const loading = ref(true);
+const confirm = useConfirm();
 
 const columns = [
   { field: "id", header: "ID" },
@@ -122,11 +130,6 @@ const columns = [
   },
 ];
 
-defineProps({
-  size: { type: Number, default: 24 },
-  color: { type: String, default: "#000000" },
-});
-
 const rows = ref(5);
 const page = ref(0);
 const first = ref(0);
@@ -134,6 +137,32 @@ const total = ref(0);
 const pageLinkSize = ref(4);
 const dialog = useDialog();
 const searchTerm = ref("");
+
+function openDeleteConfirmDialog(data: Document) {
+  confirm.require({
+    async accept() {
+      const response = (await documentService.deleteDocument(data.id)).data;
+      documentPage.value = (
+        await documentService.getDocumentsPerPage(page.value + 1, rows.value, searchTerm.value)
+      ).data;
+      console.log(response);
+    },
+    reject() {},
+    acceptProps: {
+      severity: "success",
+    },
+    rejectProps: {
+      severity: "danger",
+    },
+    acceptLabel: "Ok",
+    rejectLabel: "Cancel",
+    acceptIcon: "bx bx-check",
+    rejectIcon: "bx bx-x",
+    message: `Are you sure you want to delete ${data.name}?`,
+    icon: "bx bx-error",
+    header: `Delete Confirmation`,
+  });
+}
 
 function openEditDocument(document: Document) {
   const header = (
@@ -155,6 +184,13 @@ function openEditDocument(document: Document) {
     },
     data: {
       document: document,
+    },
+    async onClose(options) {
+      console.log(page.value, rows.value);
+      documentPage.value = (
+        await documentService.getDocumentsPerPage(page.value, rows.value, "")
+      ).data;
+      console.log(options);
     },
   });
 }
@@ -179,6 +215,14 @@ function openCreateDocumentDialog() {
       if (options && options.data) {
         const data: CreateDocument = options.data;
         await documentService.createDocument(data);
+        console.log(page.value + 1, rows.value);
+        documentPage.value = (
+          await documentService.getDocumentsPerPage(
+            page.value + 1,
+            rows.value,
+            searchTerm.value
+          )
+        ).data;
         loading.value = false;
       }
     },
@@ -192,6 +236,7 @@ async function updatePageFromPaginator(event: {
   pageCount: number;
 }) {
   console.log("event1: ", event);
+  page.value = event.page;
   rows.value = event.rows;
   documentPage.value = (
     await documentService.getDocumentsPerPage(
@@ -214,9 +259,9 @@ async function updatePageFromSearchInput(event: string) {
 
 const debouncedUpdatePageFromSearchInput = debounce((a: string) => {
   console.log(a);
-  loading.value = false
+  loading.value = false;
   updatePageFromSearchInput(a);
-  loading.value = true
+  loading.value = true;
 }, 400);
 
 async function getDocumentsPerPage() {
